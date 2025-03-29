@@ -1,3 +1,25 @@
+"""
+TMDB CLI Tool
+
+This script fetches and displays movie data from The Movie Database (TMDB) API.  
+Users can select from different movie categories:  
+- 'now_playing': Movies currently in theaters  
+- 'popular': Trending and popular movies  
+- 'top_rated': All-time highest-rated movies  
+- 'upcoming': Movies releasing soon  
+
+Usage:
+    python tmdb-cli.py --type <category>
+
+Dependencies:
+    - requests    
+
+API Key:
+    Replace 'YOUR_TMDB_API_KEY' with a valid TMDB API key.
+
+Author: Lethios
+"""
+
 import argparse
 import sys
 import requests
@@ -7,14 +29,14 @@ valid_options = {"now_playing", "popular", "top_rated", "upcoming"}
 parser.add_argument("--type", help="Choose a category: now_playing | popular | top_rated | upcoming", choices=valid_options, type=str, metavar="<category>")
 args = parser.parse_args()
 
-url = f"https://api.themoviedb.org/3/movie/{args.type}?language=en-US&page=1"
+URL = f"https://api.themoviedb.org/3/movie/{args.type}?language=en-US&page=1"
 headers = {
     "accept": "application/json",
     "Authorization": "Bearer YOUR_TMDB_API_KEY"
 }
 
 try:
-    response = requests.get(url, headers=headers)
+    response = requests.get(URL, headers=headers, timeout=10)
     response.raise_for_status()
     data = response.json()
 except requests.exceptions.RequestException as e:
@@ -44,15 +66,28 @@ GENRE_MAP = {
 }
 
 def display_movies():
+    """
+    Prints a formatted list of movies retrieved from the TMDB API.
+
+    Each movie includes:
+    - Title
+    - Release date
+    - User rating and vote count
+    - Genres (mapped from genre IDs)
+    - Synopsis/overview
+
+    Uses ANSI escape codes for colored output in the terminal.
+    """
+
     for movie in data["results"]:
         print(YELLOW + "════════════════════════════════════════" + RESET)
         print(BOLD + CYAN + f"🎥 {movie.get('original_title', 'Unknown')}" + RESET)
         print(BLUE + "📅 Release Date:" + RESET, movie.get("release_date", "Unknown"))
         print(MAGENTA + "⭐ Rating:" + RESET, f"{movie.get('vote_average', 'N/A')}/10 ({movie.get('vote_count', 'N/A')} votes)")
-        
+
         genre_names = [GENRE_MAP.get(gid, "Unknown") for gid in movie.get("genre_ids", [])]
         print(CYAN + "🎭 Genres:" + RESET, ", ".join(genre_names) if genre_names else "N/A")
-        
+
         print(BOLD + "📜 SYNOPSIS:" + RESET)
         print(movie.get("overview", "No description available."))
         print(YELLOW + "════════════════════════════════════════" + RESET)
