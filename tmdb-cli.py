@@ -18,6 +18,7 @@ API Key:
     Replace 'YOUR_TMDB_API_KEY' with a valid TMDB API key.
 
 Author: Lethios
+Date: 29-3-2025
 """
 
 import argparse
