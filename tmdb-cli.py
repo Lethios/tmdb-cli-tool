@@ -4,7 +4,7 @@ import requests
 
 parser = argparse.ArgumentParser()
 valid_options = {"now_playing", "popular", "top_rated", "upcoming"}
-parser.add_argument("--type", help="Specify the type of movie category (now_playing, popular, top_rated, upcoming)", choices=valid_options, type=str)
+parser.add_argument("--type", help="Choose a category: now_playing | popular | top_rated | upcoming", choices=valid_options, type=str, metavar="<category>")
 args = parser.parse_args()
 
 url = f"https://api.themoviedb.org/3/movie/{args.type}?language=en-US&page=1"
@@ -18,14 +18,14 @@ try:
     response.raise_for_status()
     data = response.json()
 except requests.exceptions.RequestException as e:
-    print(f"Error: Failed to fetch data from TMDb API: {e}")
+    print(f"Error: Failed to fetch data from TMDB API: {e}")
     sys.exit(1)
 except ValueError:
-    print("Error: Received invalid JSON response from TMDb API.")
+    print("Error: Received invalid JSON response from TMDB API.")
     sys.exit(1)
 
 if "results" not in data:
-    print("Error: Unexpected response format from TMDb API.")
+    print("Error: Unexpected response format from TMDB API.")
     sys.exit(1)
 
 RESET = "\033[0m"
@@ -46,14 +46,14 @@ GENRE_MAP = {
 def display_movies():
     for movie in data["results"]:
         print(YELLOW + "════════════════════════════════════════" + RESET)
-        print(BOLD + CYAN + f"🎬 {movie.get('original_title', 'Unknown')}" + RESET)
+        print(BOLD + CYAN + f"🎥 {movie.get('original_title', 'Unknown')}" + RESET)
         print(BLUE + "📅 Release Date:" + RESET, movie.get("release_date", "Unknown"))
         print(MAGENTA + "⭐ Rating:" + RESET, f"{movie.get('vote_average', 'N/A')}/10 ({movie.get('vote_count', 'N/A')} votes)")
         
         genre_names = [GENRE_MAP.get(gid, "Unknown") for gid in movie.get("genre_ids", [])]
         print(CYAN + "🎭 Genres:" + RESET, ", ".join(genre_names) if genre_names else "N/A")
         
-        print(BOLD + "📜 OVERVIEW:" + RESET)
+        print(BOLD + "📜 SYNOPSIS:" + RESET)
         print(movie.get("overview", "No description available."))
         print(YELLOW + "════════════════════════════════════════" + RESET)
 
@@ -64,5 +64,6 @@ category_headers = {
     "upcoming": "⏳ Upcoming Movies to Watch"
 }
 
+print()
 print(BOLD + category_headers.get(args.type, "Movies") + RESET)
 display_movies()
