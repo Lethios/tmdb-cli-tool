@@ -28,7 +28,7 @@ Quickly browse movie ratings, release dates, genres, and overviews in the termin
 4. **Set up your API key in an environment variable:**
    ```bash
    export TMDB_API_KEY="your_api_key_here"   
-
+   ```
 
 ## Usage
 
