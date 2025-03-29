@@ -1,7 +1,6 @@
 import argparse
 import requests
 
-
 parser = argparse.ArgumentParser()
 valid_options = {"now_playing", "popular", "top_rated", "upcoming"}
 parser.add_argument("--type", help="Specify the type of movie category (now_playing, popular, top_rated, upcoming)", choices=valid_options, type=str)
