@@ -1,4 +1,5 @@
 import argparse
+import sys
 import requests
 
 parser = argparse.ArgumentParser()
@@ -84,3 +85,7 @@ elif args.type == "upcoming":
     print(BOLD + "⏳ Upcoming Movies to Watch" + RESET)
 
     display_movies()
+
+else:
+    print("Invalid argument.)
+    sys.exit(1)
