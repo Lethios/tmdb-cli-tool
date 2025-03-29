@@ -1,17 +1,19 @@
 import argparse
 import requests
 
-url = "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1"
+
+parser = argparse.ArgumentParser()
+valid_options = {"now_playing", "popular", "top_rated", "upcoming"}
+parser.add_argument("--type", help="Specify the type of movie category (now_playing, popular, top_rated, upcoming)", choices=valid_options, type=str)
+args = parser.parse_args()
+
+url = f"https://api.themoviedb.org/3/movie/{args.type}?language=en-US&page=1"
 headers = {
     "accept": "application/json",
-    "Authorization": ""
+    "Authorization": "Bearer YOUR_TMDB_API_KEY"
 }
 response = requests.get(url, headers=headers)
 data = response.json()
-
-parser = argparse.ArgumentParser()
-parser.add_argument("--type", help="Specify the type of movie category (e.g., playing, popular, top, upcoming)", type=str)
-args = parser.parse_args()
 
 RESET = "\033[0m"
 BOLD = "\033[1m"
@@ -42,32 +44,44 @@ GENRE_MAP = {
     37: "Western"
 }
 
-if args.type == "playing":
-    
-    print(BOLD + "🎬 Now Playing in Theaters" + RESET)    
-
+def display_movies():
     for movie in data["results"]:        
         print(YELLOW + "════════════════════════════════════════" + RESET)
 
-        print(BOLD + CYAN + f"🎬 {movie["original_title"]}" + RESET)
+        print(BOLD + CYAN + f"🎬 {movie['original_title']}" + RESET)
 
-        print(BLUE + "📅 Release Date:" + RESET, f"{movie["release_date"]}")
+        print(BLUE + "📅 Release Date:" + RESET, f"{movie['release_date']}")
 
-        print(MAGENTA + "⭐ Rating:" + RESET, f"{movie["vote_average"]}/10 ({movie["vote_count"]} votes)")
+        print(MAGENTA + "⭐ Rating:" + RESET, f"{movie['vote_average']}/10 ({movie['vote_count']} votes)")
 
         genre_names = [GENRE_MAP.get(gid, "Unknown") for gid in movie.get("genre_ids", [])]
         print(CYAN + "🎭 Genres:" + RESET, ", ".join(genre_names) if genre_names else "N/A")
 
         print(BOLD + "📜 OVERVIEW:" + RESET)
-        print(movie["overview"])
+        print(movie['overview'])
 
         print(YELLOW + "════════════════════════════════════════" + RESET)
 
-elif args.type == "popular":
-    pass
+if args.type == "now_playing":
+    
+    print(BOLD + "🎬 Now Playing in Theaters" + RESET)    
 
-elif args.type == "top":
-    pass
+    display_movies()
+
+elif args.type == "popular":
+    
+    print(BOLD + "🔥 Trending & Popular Movies" + RESET)
+
+    display_movies()
+
+elif args.type == "top_rated":
+    
+    print(BOLD + "⭐ All-Time Top Rated Movies" + RESET)
+
+    display_movies()
 
 elif args.type == "upcoming":
-    pass
+    
+    print(BOLD + "⏳ Upcoming Movies to Watch" + RESET)
+
+    display_movies()
