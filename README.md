@@ -4,14 +4,12 @@ A simple command-line tool to fetch and display movie details from The Movie Dat
 Supports fetching Now Playing, Popular, Top Rated, and Upcoming movies with a clean, formatted terminal output.  
 Quickly browse movie ratings, release dates, genres, and overviews in the terminal.
 
----
 
 ## Features
 - Fetch Now Playing, Popular, Top Rated, and Upcoming movies.
 - Displays movie details with ratings, genres, and overview.
 - Uses color formatting for better readability in the terminal.
 
----
 
 ## Installation
 1. **Clone the repository:**  
@@ -43,13 +41,11 @@ This tool uses **The Movie Database (TMDB) API**. You can get an API key by sign
 
 
 ## Author
-
 **Lethios**
 - Github: [@Lethios](https://github.com/Lethios)
 - Twitter: [@LethiosDev](https://x.com/LethiosDev)
 
 
 ## License
-
 Copyright © 2025 [Lethios](https://github.com/Lethios).  
 This project is licensed under the [MIT License](LICENSE).
