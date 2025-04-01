@@ -8,9 +8,9 @@ Quickly browse movie ratings, release dates, genres, and overviews in the termin
 
 ## Features
 
-- Fetch Now Playing, Popular, Top Rated, and Upcoming movies
-- Displays movie details with ratings, genres, and overview
-- Uses color formatting for better readability in the terminal
+- Fetch Now Playing, Popular, Top Rated, and Upcoming movies.
+- Displays movie details with ratings, genres, and overview.
+- Uses color formatting for better readability in the terminal.
 
 ---
 
