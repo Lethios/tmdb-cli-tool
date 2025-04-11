@@ -15,7 +15,7 @@ Quickly browse movie ratings, release dates, genres, and overviews in the termin
 1. **Clone the repository:**  
    ```bash
    git clone https://github.com/Lethios/tmdb-cli-tool.git
-   cd tmdb-cli-tool
+   cd tmdb-cli
    ```
 2. **Ensure Python is installed (Python 3.x recommended).**
 3. **Install dependencies:**
