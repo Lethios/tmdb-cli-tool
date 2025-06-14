@@ -1,26 +1,3 @@
-"""
-TMDB CLI Tool
-
-This script fetches and displays movie data from The Movie Database (TMDB) API.  
-Users can select from different movie categories:  
-- 'now_playing': Movies currently in theaters  
-- 'popular': Trending and popular movies  
-- 'top_rated': All-time highest-rated movies  
-- 'upcoming': Movies releasing soon  
-
-Usage:
-    python tmdb-cli.py --type <category>
-
-Dependencies:
-    - requests    
-
-API Key:
-    Replace 'YOUR_TMDB_API_KEY' with a valid TMDB API key.
-
-Author: Lethios
-Date: 29-3-2025
-"""
-
 import argparse
 import sys
 import requests
